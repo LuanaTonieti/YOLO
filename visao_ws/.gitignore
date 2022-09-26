@@ -1,1 +1,5 @@
-!traced_model.pt
+traced_model.pt
+build
+install
+log
+runs

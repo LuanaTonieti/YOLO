@@ -15,10 +15,10 @@ def gsutil_getsize(url=''):
     return eval(s.split(' ')[0]) if len(s) else 0  # bytes
 
 
-def attempt_download(file="/home/robofei/Desktop/visao_ws/vision_test/vision_test/best.pt", repo='WongKinYiu/yolov7'):
+def attempt_download(file, repo='WongKinYiu/yolov7'):
     # Attempt file download if does not exist
     print("UTILS")
-    file = Path(str("/home/robofei/Desktop/visao_ws/vision_test/vision_test/best.pt").strip().replace("'", ''))
+    file = Path(str(file).strip().replace("'", ''))
     print("ENTROU NA FUNÇÃO ATTEMPT DOWNLOAD")
 
     if not file.exists():

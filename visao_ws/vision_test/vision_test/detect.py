@@ -2,7 +2,7 @@
 # ros2 run vision_pkg vision
 #
 # Para ver o que a camera esta vendo:
-# ros2 run vision_pkg vision --vb
+# ros2 run vision_test detect --source 2 
 #
 # ros2 topic pub -1 /neck_position custom_interfaces/NeckPosition "{position19: 2047, position20: 1050}"
 ####################################################################################################################################
@@ -53,7 +53,7 @@ from .utils.general import check_img_size, check_requirements, check_imshow, non
 from .utils.plots import plot_one_box
 from .utils.torch_utils import select_device, load_classifier, time_synchronized, TracedModel
 
-PATH_TO_WEIGHTS = '/home/robofei/Desktop/visao_ws/vision_test/vision_test/best.pt'
+PATH_TO_WEIGHTS = 'vision_test/vision_test/best.pt'
 
 parser = argparse.ArgumentParser()
 parser.add_argument('--weights', nargs='+', type=str, default='yolov7.pt', help='model.pt path(s)')
@@ -117,7 +117,7 @@ class ballStatus(Node):
     def listener_callback(self, message):
         self.neck_position = [message.position19, message.position20]
         msg=Vision()
-        source, weights, view_img, save_txt, imgsz, trace = opt.source, opt.weights, opt.view_img, opt.save_txt, opt.img_size, not opt.no_trace
+        source, weights, view_img, save_txt, imgsz, trace = opt.source, self.weights, opt.view_img, opt.save_txt, opt.img_size, not opt.no_trace
 
         set_logging()
         device = select_device(opt.device)
