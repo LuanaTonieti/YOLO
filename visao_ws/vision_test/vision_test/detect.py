@@ -24,7 +24,6 @@ import ctypes
 from math import log,exp,tan,radians
 #import imutils
 
-from .serialization import *
 from .ClassConfig import *
 
 try:
