@@ -22,7 +22,6 @@ import numpy as np
 import cv2
 import ctypes
 from math import log,exp,tan,radians
-from .camvideostream import WebcamVideoStream
 #import imutils
 
 from .serialization import *
@@ -85,7 +84,6 @@ class ballStatus(Node):
         self.config = config
         self.publisher_ = self.create_publisher(Vision, '/ball_position', 10)
         self.neck_position_subscriber = self.create_subscription(NeckPosition, '/neck_position', self.listener_callback, 10)
-        self.vcap = WebcamVideoStream(src=0).start() # Abrindo camera
         #timer_period = 0.008  # seconds
         #self.timer = self.create_timer(timer_period, self.detect())
         #self.i = 0
@@ -264,14 +262,20 @@ class ballStatus(Node):
                     self.publisher_.publish(msg)
                     print("Bola Esquerda")
 
-                #Bola centro 
-                elif (int(c1) < self.config.x_right and int(c1) > self.config.x_left):
+                #Bola centro esquerda
+                elif (int(c1) > self.config.x_left and int(c1) < self.config.x_center):
                     msg.ball_med = True
                     self.publisher_.publish(msg)
-                    print("Bola Centralizada")
+                    print("Bola Centralizada a esquerda")
+
+                #Bola centro esquerda
+                elif (int(c1) < self.config.x_right and int(c1) > self.config.x_center):
+                    msg.ball_med = True
+                    self.publisher_.publish(msg)
+                    print("Bola Centralizada a direita")
 
                 #Bola a direita
-                elif (int(c1) >= self.config.x_right):
+                else:
                     msg.ball_far = True
                     self.publisher_.publish(msg)
                     print("Bola Direita")
@@ -285,13 +289,13 @@ class ballStatus(Node):
                     self.config.max_count_lost_frame
 
                 #Bola ao centro
-                elif (int(c2) > self.config.y_longe and int(c2) < self.config.x_center):
+                elif (int(c2) > self.config.y_longe and int(c2) < self.config.y_chute):
                     msg.ball_center_left = True
                     self.publisher_.publish(msg)
                     print("Bola ao Centro")
 
                 #Bola Perto
-                elif (int(c2) >= self.config.y_chute):
+                else:
                     msg.ball_center_right = True
                     self.publisher_.publish(msg)
                     print("Bola Perto")
